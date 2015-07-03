@@ -195,6 +195,8 @@ typedef void(^STKFrameFilter)(UInt32 channelsPerFrame, UInt32 bytesPerFrame, UIn
 /// The STKDataSource is used as the queue item ID
 -(void) playDataSource:(STKDataSource*)dataSource;
 
+-(BOOL) isPaused;
+
 /// Plays the given item (all pending queued items are removed)
 -(void) playDataSource:(STKDataSource*)dataSource withQueueItemID:(NSObject*)queueItemId;
 
