@@ -163,6 +163,8 @@ typedef void(^STKFrameFilter)(UInt32 channelsPerFrame, UInt32 bytesPerFrame, UIn
 /// Gets and sets the delegate used for receiving events from the STKAudioPlayer
 @property (readwrite, unsafe_unretained) id<STKAudioPlayerDelegate> delegate;
 
+@propert (readwrite) BOOL paused; 
+
 /// Creates a datasource from a given URL.
 /// URLs with FILE schemes will return an STKLocalFileDataSource.
 /// URLs with HTTP schemes will return an STKHTTPDataSource wrapped within an STKAutoRecoveringHTTPDataSource.

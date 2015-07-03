@@ -694,6 +694,7 @@ static void AudioFileStreamPacketsProc(void* clientData, UInt32 numberBytes, UIn
 -(void) play:(NSString*)urlString
 {
 	[self play:urlString withQueueItemID:urlString];
+    self.paused = NO
 }
 
 -(void) play:(NSString*)urlString withQueueItemID:(NSObject*)queueItemId
@@ -701,26 +702,31 @@ static void AudioFileStreamPacketsProc(void* clientData, UInt32 numberBytes, UIn
     NSURL* url = [NSURL URLWithString:urlString];
     
 	[self setDataSource:[STKAudioPlayer dataSourceFromURL:url] withQueueItemId:queueItemId];
+    self.paused = NO
 }
 
 -(void) playURL:(NSURL*)url
 {
 	[self playURL:url withQueueItemID:url];
+    self.paused = NO
 }
 
 -(void) playURL:(NSURL*)url withQueueItemID:(NSObject*)queueItemId
 {
 	[self setDataSource:[STKAudioPlayer dataSourceFromURL:url] withQueueItemId:queueItemId];
+    self.paused = NO
 }
 
 -(void) playDataSource:(STKDataSource*)dataSource
 {
 	[self playDataSource:dataSource withQueueItemID:dataSource];
+    self.paused = NO
 }
 
 -(void) playDataSource:(STKDataSource*)dataSource withQueueItemID:(NSObject *)queueItemId
 {
 	[self setDataSource:dataSource withQueueItemId:queueItemId];
+    self.paused = NO
 }
 
 -(void) setDataSource:(STKDataSource*)dataSourceIn withQueueItemId:(NSObject*)queueItemId
@@ -1674,6 +1680,11 @@ static void AudioFileStreamPacketsProc(void* clientData, UInt32 numberBytes, UIn
     pthread_mutex_unlock(&playerMutex);
 }
 
+-(BOOL) isPaused 
+{
+    return self.paused
+}
+
 -(void) resume
 {
     pthread_mutex_lock(&playerMutex);
@@ -1683,6 +1694,7 @@ static void AudioFileStreamPacketsProc(void* clientData, UInt32 numberBytes, UIn
         if (self.internalState == STKAudioPlayerInternalStatePaused)
         {
             self.internalState = self.stateBeforePaused;
+            self.paused = YES
             
             if (seekToTimeWasRequested)
             {
