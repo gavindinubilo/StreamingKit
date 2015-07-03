@@ -1659,6 +1659,7 @@ static void AudioFileStreamPacketsProc(void* clientData, UInt32 numberBytes, UIn
         {
             self.stateBeforePaused = self.internalState;
             self.internalState = STKAudioPlayerInternalStatePaused;
+            self.paused = YES;
             
             if (audioGraph)
             {
@@ -1694,7 +1695,7 @@ static void AudioFileStreamPacketsProc(void* clientData, UInt32 numberBytes, UIn
         if (self.internalState == STKAudioPlayerInternalStatePaused)
         {
             self.internalState = self.stateBeforePaused;
-            self.paused = YES;
+            self.paused = NO;
             
             if (seekToTimeWasRequested)
             {
